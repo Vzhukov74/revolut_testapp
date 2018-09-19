@@ -1,0 +1,14 @@
+disabled_rules:
+- line_length
+- colon
+- trailing_whitespace
+- force_cast
+- variable_name
+- type_name
+- control_statement
+- implicit_getter
+
+excluded:
+- Pods
+
+included:
