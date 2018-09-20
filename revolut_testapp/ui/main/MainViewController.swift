@@ -9,7 +9,6 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             CurrencyCell.register(table: tableView)
@@ -19,8 +18,25 @@ class MainViewController: UIViewController {
         }
     }
     
+    var task: URLSessionDataTask?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let url = URL(string: ApiData.currencyDataBaseUrl + "/latest?base=EUR")
+        
+        task = URLSession.shared.dataTask(with: url!, completionHandler: { (data, responce, error) in
+            if let data = data {
+                let decoder = JSONDecoder()
+                do {
+                    let result = try decoder.decode(Currency.self, from: data)
+                    print(result)
+                } catch {
+                    print(error)
+                }
+            }
+        })
+        task?.resume()
     }
 }
 
