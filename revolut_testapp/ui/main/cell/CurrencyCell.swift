@@ -10,7 +10,7 @@ import UIKit
 
 class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
     
-    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var transcriptLabel: UILabel!
     @IBOutlet weak var valueInput: UITextField!
@@ -36,7 +36,12 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
     }
     
     private func setup() {
-        codeLabel.text = item?.data?.base
+        if let base = item?.data?.base {
+            codeLabel.text = base
+            
+            iconLabel.text = currencyCodeToDetailInfoMapping[base]?.flag
+            transcriptLabel.text = currencyCodeToDetailInfoMapping[base]?.name
+        }
     }
     
     func becomeFirstResponde() {
