@@ -9,7 +9,12 @@
 import UIKit
 
 class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
-
+    
+    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var codeLabel: UILabel!
+    @IBOutlet weak var transcriptLabel: UILabel!
+    @IBOutlet weak var valueInput: UITextField!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,6 +26,22 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
         // Configure the view for the selected state
     }
     
+    var item: CurrencyItemModel? {
+        didSet {
+            setup()
+            item?.observer = {
+                self.setup()
+            }
+        }
+    }
+    
+    private func setup() {
+        codeLabel.text = item?.data?.base
+    }
+    
+    func becomeFirstResponde() {
+        valueInput.text = "becomeFirstResponder"
+    }
 }
 
 protocol CellRegistable { }

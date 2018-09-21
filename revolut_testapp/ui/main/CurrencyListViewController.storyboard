@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main View Controller-->
+        <!--Currency List View Controller-->
         <scene sceneID="TJT-YA-1tW">
             <objects>
-                <viewController storyboardIdentifier="MainViewController" id="Pfb-oB-TwU" customClass="MainViewController" customModule="revolut_testapp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CurrencyListViewController" id="Pfb-oB-TwU" customClass="CurrencyListViewController" customModule="revolut_testapp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VP4-g7-CUl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

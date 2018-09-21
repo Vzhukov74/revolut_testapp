@@ -9,7 +9,7 @@
 import UIKit
 
 enum StoryboardList: String {
-    case main = "MainViewController"
+    case main = "CurrencyListViewController"
 }
 
 /*

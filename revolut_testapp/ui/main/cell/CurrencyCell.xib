@@ -67,6 +67,12 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="codeLabel" destination="xdv-gC-jAY" id="pBL-I8-01h"/>
+                <outlet property="icon" destination="Q05-du-l9Y" id="rtt-8e-DS1"/>
+                <outlet property="transcriptLabel" destination="6rA-xI-TUT" id="sls-x4-9oS"/>
+                <outlet property="valueInput" destination="njM-F7-Czb" id="ehD-Es-cD4"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

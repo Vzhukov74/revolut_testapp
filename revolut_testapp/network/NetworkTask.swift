@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-class NetworkTask<T> {
+class NetworkTask<T> where T: Codable {
     private var task: URLSessionDataTask?
     
     //for post request you can add extension (i confine myself only get requests)
-    func execute(getUrl: String, uiIndication: ((_ isLoading: Bool) -> Void)? = nil, completion: (_ result: NetworkTaskResult<T>) -> Void) {
+    func execute(getUrl: String, uiIndication: ((_ isLoading: Bool) -> Void)? = nil, completion: @escaping (_ result: NetworkTaskResult<T>) -> Void) {
         guard let url = URL(string: getUrl) else {
             //here
             return
@@ -27,10 +27,30 @@ class NetworkTask<T> {
                 uiIndication?(false)
             }
             
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.fail(error!.localizedDescription))
+                }
+            }
+            
             let statusCode = (responce as? HTTPURLResponse)?.statusCode
             
-            if statusCode == 200 {
-                
+            if statusCode == 200, data != nil {
+                let decoder = JSONDecoder()
+                do {
+                    let result = try decoder.decode(T.self, from: data!)
+                    DispatchQueue.main.async {
+                        completion(.success(result))
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        completion(.fail(error.localizedDescription))
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(.fail("statusCode is \(String(describing: statusCode))"))
+                }
             }
         })
         
