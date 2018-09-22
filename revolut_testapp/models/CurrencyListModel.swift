@@ -9,10 +9,29 @@
 import Foundation
 
 class CurrencyItemModel {
-    private let code: String
+    let code: String
     private var task: NetworkTask<Currency>?
     private(set) var data: Currency?
+    private var baseCode: String? {
+        didSet {
+            observer?()
+        }
+    }
+    private var baseValue: Float? {
+        didSet {
+            observer?()
+        }
+    }
     
+    var value: Float {
+        if let baseValue = baseValue, let baseCode = baseCode, let rate = data?.rates[baseCode] {
+            return baseValue / rate
+        } else {
+            return 0
+        }
+    }
+    
+    var isBase: Bool = false
     var observer: (() -> Void)?
     
     init(code: String) {
@@ -34,6 +53,14 @@ class CurrencyItemModel {
         })
     }
     
+    func didSetNew(baseCode: String) {
+        self.baseCode = baseCode
+    }
+    
+    func didSetNew(baseValue: Float) {
+        self.baseValue = baseValue
+    }
+    
     deinit {
         print("deinit - CurrencyItemModel")
     }
@@ -41,8 +68,29 @@ class CurrencyItemModel {
 
 class CurrencyListModel {
     private(set) var items: [CurrencyItemModel] = []
+    private var currentBase: CurrencyItemModel {
+        didSet {
+            items.forEach { $0.didSetNew(baseCode: currentBase.code) }
+        }
+    }
+    private var currentValue: Float {
+        didSet {
+            items.forEach { $0.didSetNew(baseValue: currentValue) }
+        }
+    }
     
-    init() {
-        ApiData.currencyCodes.forEach { items.append(CurrencyItemModel(code: $0)) }
+    init(with currencyCodeList: [String]) {
+        items = currencyCodeList.map { CurrencyItemModel(code: $0) }
+        currentBase = items.first!
+        currentValue = 1.0
+        
+        items.forEach { $0.didSetNew(baseCode: currentBase.code) }
+        items.forEach { $0.didSetNew(baseValue: currentValue) }
+    }
+    
+    func set(newBase: CurrencyItemModel) {
+        currentBase.isBase = false
+        newBase.isBase = true
+        currentBase = newBase
     }
 }

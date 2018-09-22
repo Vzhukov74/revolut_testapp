@@ -15,17 +15,6 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
     @IBOutlet weak var transcriptLabel: UILabel!
     @IBOutlet weak var valueInput: UITextField!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
     var item: CurrencyItemModel? {
         didSet {
             setup()
@@ -36,16 +25,12 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
     }
     
     private func setup() {
-        if let base = item?.data?.base {
-            codeLabel.text = base
-            
-            iconLabel.text = currencyCodeToDetailInfoMapping[base]?.flag
-            transcriptLabel.text = currencyCodeToDetailInfoMapping[base]?.name
+        if let item = item {
+            codeLabel.text = item.code
+            iconLabel.text = currencyCodeToDetailInfoMapping[item.code]?.flag
+            transcriptLabel.text = currencyCodeToDetailInfoMapping[item.code]?.name
+            valueInput.text = String(item.value)
         }
-    }
-    
-    func becomeFirstResponde() {
-        valueInput.text = "becomeFirstResponder"
     }
 }
 

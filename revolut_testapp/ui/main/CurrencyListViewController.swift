@@ -46,10 +46,11 @@ extension CurrencyListViewController: UITableViewDataSource, UITableViewDelegate
         tableView.performBatchUpdates({
             tableView.moveRow(at: indexPath, to: startIndexPath)
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
-            if let cell = tableView.cellForRow(at: indexPath) as? CurrencyCell {
-                cell.becomeFirstResponde()
+        }, completion: { [weak self] (_) in
+            if let item = self?.model.items[indexPath.row] {
+                self?.model.set(newBase: item)
             }
-        }, completion: nil)
+        })
     }
 }
 
