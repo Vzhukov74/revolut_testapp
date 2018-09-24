@@ -45,7 +45,7 @@
                         </constraints>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="30"/>
-                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="postal-code"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvO-nx-eCR">
                         <rect key="frame" x="16" y="10" width="40" height="40"/>
@@ -63,7 +63,7 @@
                     <constraint firstItem="xdv-gC-jAY" firstAttribute="top" secondItem="FvO-nx-eCR" secondAttribute="top" id="8eL-SO-th2"/>
                     <constraint firstItem="xdv-gC-jAY" firstAttribute="leading" secondItem="FvO-nx-eCR" secondAttribute="trailing" constant="8" id="9y5-9A-G7u"/>
                     <constraint firstItem="6rA-xI-TUT" firstAttribute="bottom" secondItem="FvO-nx-eCR" secondAttribute="bottom" id="ADx-n3-9hg"/>
-                    <constraint firstAttribute="bottom" secondItem="FvO-nx-eCR" secondAttribute="bottom" constant="9.5" id="Glr-iP-0b0"/>
+                    <constraint firstAttribute="bottom" secondItem="FvO-nx-eCR" secondAttribute="bottom" constant="10" id="Glr-iP-0b0"/>
                     <constraint firstItem="njM-F7-Czb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Rl0-k3-94u"/>
                     <constraint firstItem="njM-F7-Czb" firstAttribute="leading" secondItem="xdv-gC-jAY" secondAttribute="trailing" constant="8" id="TUC-qj-EPK"/>
                     <constraint firstItem="6rA-xI-TUT" firstAttribute="leading" secondItem="FvO-nx-eCR" secondAttribute="trailing" constant="8" id="ZmI-WB-0oC"/>

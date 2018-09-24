@@ -13,24 +13,60 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
     @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var transcriptLabel: UILabel!
-    @IBOutlet weak var valueInput: UITextField!
+    @IBOutlet weak var valueInput: UITextField! {
+        didSet {
+            valueInput.delegate = self
+        }
+    }
     
-    var item: CurrencyItemModel? {
+    var item: CurrencyItemModel! {
         didSet {
             setup()
-            item?.observer = {
-                self.setup()
+            item.uiObserver = {
+                self.update()
             }
         }
     }
     
     private func setup() {
-        if let item = item {
-            codeLabel.text = item.code
-            iconLabel.text = currencyCodeToDetailInfoMapping[item.code]?.flag
-            transcriptLabel.text = currencyCodeToDetailInfoMapping[item.code]?.name
+        codeLabel.text = item.code
+        iconLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.code]?.flag
+        transcriptLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.code]?.name
+        update()
+    }
+    
+    private func update() {
+        if !item.isBase {
             valueInput.text = String(item.value)
+            valueInput.resignFirstResponder()
         }
+    }
+}
+
+extension CurrencyCell: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return item.isBase
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let valueAsStr = textField.text, let value = Float(valueAsStr) else { return }
+        item.setNew(baseValue: value)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.isNumber() {
+            guard var text = textField.text, let range = Range(range, in: text) else { return true }
+            text.replaceSubrange(range, with: string)
+            if let value = Float(text) {
+                item.setNew(baseValue: value)
+            }
+        }
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 
@@ -48,5 +84,12 @@ extension CellDequeueReusable {
     static func cell(table: UITableView, indexPath: IndexPath) -> Self {
         let cell = table.dequeueReusableCell(withIdentifier: String(describing: self), for: indexPath) as! Self
         return cell
+    }
+}
+
+extension String {
+    func isNumber() -> Bool {
+        let range = self.range(of: "^[0-9.]{0,1}$", options: .regularExpression, range: nil, locale: nil)
+        return range != nil
     }
 }

@@ -8,69 +8,11 @@
 
 import Foundation
 
-class CurrencyItemModel {
-    let code: String
-    private var task: NetworkTask<Currency>?
-    private(set) var data: Currency?
-    private var baseCode: String? {
-        didSet {
-            observer?()
-        }
-    }
-    private var baseValue: Float? {
-        didSet {
-            observer?()
-        }
-    }
-    
-    var value: Float {
-        if let baseValue = baseValue, let baseCode = baseCode, let rate = data?.rates[baseCode] {
-            return baseValue / rate
-        } else {
-            return 0
-        }
-    }
-    
-    var isBase: Bool = false
-    var observer: (() -> Void)?
-    
-    init(code: String) {
-        self.code = code
-        loadData()
-    }
-    
-    private func loadData() {
-        let url = ApiData.currencyDataBaseUrl + "/latest?base=" + code
-        task = NetworkTask<Currency>()
-        task?.execute(getUrl: url, completion: { (result) in
-            switch result {
-            case .success(let data):
-                self.data = data
-                self.observer?()
-            case .fail(let error):
-                print(error)
-            }
-        })
-    }
-    
-    func didSetNew(baseCode: String) {
-        self.baseCode = baseCode
-    }
-    
-    func didSetNew(baseValue: Float) {
-        self.baseValue = baseValue
-    }
-    
-    deinit {
-        print("deinit - CurrencyItemModel")
-    }
-}
-
 class CurrencyListModel {
     private(set) var items: [CurrencyItemModel] = []
-    private var currentBase: CurrencyItemModel {
+    private var currentBase: String {
         didSet {
-            items.forEach { $0.didSetNew(baseCode: currentBase.code) }
+            items.forEach { $0.didSetNew(baseCode: currentBase) }
         }
     }
     private var currentValue: Float {
@@ -78,19 +20,45 @@ class CurrencyListModel {
             items.forEach { $0.didSetNew(baseValue: currentValue) }
         }
     }
+    private var timer = Timer()
     
     init(with currencyCodeList: [String]) {
         items = currencyCodeList.map { CurrencyItemModel(code: $0) }
-        currentBase = items.first!
+        currentBase = items.first!.code //we always have first element in items
         currentValue = 1.0
         
-        items.forEach { $0.didSetNew(baseCode: currentBase.code) }
+        items.forEach { $0.didSetNew(baseCode: currentBase) }
         items.forEach { $0.didSetNew(baseValue: currentValue) }
+        items.forEach {
+            $0.baseValueObserver = { [weak self] (value) in
+                self?.currentValue = value
+            }
+        }
+        
+        let timeInterval = TimeInterval(AppConfig.currencyUpdateTimeInterval)
+        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true, block: { [weak self] (_) in
+            self?.needToUpdateCurrencyData()
+        })
     }
     
-    func set(newBase: CurrencyItemModel) {
-        currentBase.isBase = false
-        newBase.isBase = true
-        currentBase = newBase
+    func swapItem(at i: Int, at j: Int) {
+        guard i < items.count else { return }
+        items.swapAt(i, j)
+        let base = items.first! //we always have first element in items
+        set(newBase: base)
+    }
+    
+    private func set(newBase: CurrencyItemModel) {
+        let newValue = newBase.value
+        currentBase = newBase.code
+        currentValue = newValue
+    }
+
+    private func needToUpdateCurrencyData() {
+        items.forEach { $0.needToUpdateCurrencyData() }
+    }
+    
+    deinit {
+        timer.invalidate()
     }
 }
