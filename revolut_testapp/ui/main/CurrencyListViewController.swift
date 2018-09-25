@@ -40,6 +40,7 @@ extension CurrencyListViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        guard indexPath.row > 0 else { return }
         
         let startIndexPath = IndexPath(row: 0, section: 0)
         
@@ -47,7 +48,7 @@ extension CurrencyListViewController: UITableViewDataSource, UITableViewDelegate
             tableView.moveRow(at: indexPath, to: startIndexPath)
         }, completion: { [weak self] (_) in
             self?.model.swapItem(at: indexPath.row, at: startIndexPath.row)
-            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
         })
     }
 }

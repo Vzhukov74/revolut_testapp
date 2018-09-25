@@ -13,13 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let vc = CurrencyListViewController.storyboardInstance
         
         let currencyCodes = AppConfig.currencyCodes
-        let items = currencyCodes.map { CurrencyItemModel(dataProvider: CurrencyDataProvider(currencyCode: $0)) }
+        let items = currencyCodes.map { CurrencyItemModel(dataProvider: CurrencyDataProvider(currencyCode: $0), initValue: AppConfig.currencyInitBaseValue) }
         
         vc?.model = CurrencyListModel(with: items)
         window?.rootViewController = vc

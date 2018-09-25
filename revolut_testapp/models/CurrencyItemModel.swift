@@ -10,37 +10,24 @@ import Foundation
 
 class CurrencyItemModel {
     private let dataProvider: CurrencyDataProvider!
-    private var baseCode: String? {
-        didSet {
-            uiObserver?()
-        }
-    }
-    private var baseValue: Float? {
-        didSet {
-            uiObserver?()
-        }
-    }
+    private let initValue: Float
+    private var baseCode: String?
+    private var baseValue: Float?
+    private(set) var isBase: Bool = false
+    private(set) var value: Float
     
+    var uiObserver: (() -> Void)?
+    var baseValueObserver: ((_ newValue: Float) -> Void)?
     var currencyCode: String {
         return dataProvider.currencyCode
     }
-
-    var value: Float {
-        if let baseValue = baseValue, let baseCode = baseCode, let rate = dataProvider.data?.rates[baseCode] {
-            return baseValue / rate
-        } else {
-            return baseValue ?? AppConfig.currencyInitBaseValue //if baseValue is nil return init value
-        }
-    }
     
-    private(set) var isBase: Bool = false
-    var uiObserver: (() -> Void)?
-    var baseValueObserver: ((_ newValue: Float) -> Void)?
-    
-    init(dataProvider: CurrencyDataProvider) {
+    init(dataProvider: CurrencyDataProvider, initValue: Float) {
+        self.initValue = initValue
+        self.value = initValue
         self.dataProvider = dataProvider
         self.dataProvider.subscriber = { [weak self] in
-            self?.uiObserver?()
+            self?.calculate()
         }
         self.dataProvider.loadData()
     }
@@ -49,19 +36,44 @@ class CurrencyItemModel {
         self.dataProvider.loadData()
     }
     
+    private func calculate() {
+        guard let baseValue = self.baseValue else { return }
+        if isBase {
+            value = baseValue
+        } else {
+            guard let baseCode = baseCode, let rate = dataProvider.data?.rates[baseCode] else { return }
+            value = baseValue / rate
+        }
+        
+        self.uiObserver?()
+    }
+    
     func didSetNew(baseCode: String) {
-        self.isBase = baseCode == dataProvider.currencyCode ? true : false
-        self.baseCode = baseCode
+        self.isBase = baseCode == dataProvider.currencyCode
+
+        if !self.isBase {
+            self.baseCode = baseCode
+        }
     }
     
     func didSetNew(baseValue: Float) {
         if !isBase {
             self.baseValue = baseValue
+            calculate()
         }
     }
     
     func setNew(baseValue: Float) {
-        self.baseValue = baseValue
         self.baseValueObserver?(baseValue)
+    }
+}
+
+extension CurrencyItemModel {
+    var icon: String? {
+        return AppConfig.currencyCodeToDetailInfoMapping[currencyCode]?.flag
+    }
+    
+    var transcript: String? {
+        return AppConfig.currencyCodeToDetailInfoMapping[currencyCode]?.name
     }
 }

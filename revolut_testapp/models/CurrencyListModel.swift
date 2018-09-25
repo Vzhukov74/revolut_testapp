@@ -50,9 +50,9 @@ class CurrencyListModel {
     }
     
     private func set(newBase: CurrencyItemModel) {
-        let newValue = newBase.value
+        let value = newBase.value
         currentBase = newBase.currencyCode
-        currentValue = newValue
+        currentValue = value
     }
 
     private func needToUpdateCurrencyData() {

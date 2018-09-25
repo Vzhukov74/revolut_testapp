@@ -37,17 +37,22 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
     private func setup() {
         if let item = self.item {
             codeLabel.text = item.currencyCode
-            iconLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.currencyCode]?.flag
-            transcriptLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.currencyCode]?.name
-            valueInput.text = String(item.value)
+            iconLabel.text = item.icon
+            transcriptLabel.text = item.transcript
+            setValueLabel(with: item.value)
         }
     }
     
     private func update() {
         if let item = self.item, !item.isBase {
-            valueInput.text = String(item.value)
+            setValueLabel(with: item.value)
             valueInput.resignFirstResponder()
         }
+    }
+    
+    private func setValueLabel(with value: Float) {
+        let str = String(format: "%.2f", value)
+        valueInput.text = str
     }
 }
 
