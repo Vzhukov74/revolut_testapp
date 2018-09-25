@@ -19,24 +19,32 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
         }
     }
     
-    var item: CurrencyItemModel! {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        item?.uiObserver = nil
+        item = nil
+    }
+    
+    var item: CurrencyItemModel? {
         didSet {
             setup()
-            item.uiObserver = {
+            item?.uiObserver = {
                 self.update()
             }
         }
     }
     
     private func setup() {
-        codeLabel.text = item.code
-        iconLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.code]?.flag
-        transcriptLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.code]?.name
-        update()
+        if let item = self.item {
+            codeLabel.text = item.currencyCode
+            iconLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.currencyCode]?.flag
+            transcriptLabel.text = AppConfig.currencyCodeToDetailInfoMapping[item.currencyCode]?.name
+            valueInput.text = String(item.value)
+        }
     }
     
     private func update() {
-        if !item.isBase {
+        if let item = self.item, !item.isBase {
             valueInput.text = String(item.value)
             valueInput.resignFirstResponder()
         }
@@ -45,12 +53,12 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
 
 extension CurrencyCell: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return item.isBase
+        return item?.isBase ?? false
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let valueAsStr = textField.text, let value = Float(valueAsStr) else { return }
-        item.setNew(baseValue: value)
+        item?.setNew(baseValue: value)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -58,7 +66,7 @@ extension CurrencyCell: UITextFieldDelegate {
             guard var text = textField.text, let range = Range(range, in: text) else { return true }
             text.replaceSubrange(range, with: string)
             if let value = Float(text) {
-                item.setNew(baseValue: value)
+                item?.setNew(baseValue: value)
             }
         }
         return true

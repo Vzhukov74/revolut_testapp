@@ -22,10 +22,11 @@ class CurrencyListModel {
     }
     private var timer = Timer()
     
-    init(with currencyCodeList: [String]) {
-        items = currencyCodeList.map { CurrencyItemModel(code: $0) }
-        currentBase = items.first!.code //we always have first element in items
-        currentValue = 1.0
+    init(with currencyItems: [CurrencyItemModel]) {
+        assert(currencyItems.count > 0)
+        items = currencyItems
+        currentBase = items.first!.currencyCode //we always have first element in items
+        currentValue = AppConfig.currencyInitBaseValue
         
         items.forEach { $0.didSetNew(baseCode: currentBase) }
         items.forEach { $0.didSetNew(baseValue: currentValue) }
@@ -50,7 +51,7 @@ class CurrencyListModel {
     
     private func set(newBase: CurrencyItemModel) {
         let newValue = newBase.value
-        currentBase = newBase.code
+        currentBase = newBase.currencyCode
         currentValue = newValue
     }
 

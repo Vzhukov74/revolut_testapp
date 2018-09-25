@@ -9,9 +9,7 @@
 import Foundation
 
 class CurrencyItemModel {
-    let code: String
-    private var task: NetworkTask<Currency>?
-    private(set) var data: Currency?
+    private let dataProvider: CurrencyDataProvider!
     private var baseCode: String? {
         didSet {
             uiObserver?()
@@ -23,11 +21,15 @@ class CurrencyItemModel {
         }
     }
     
+    var currencyCode: String {
+        return dataProvider.currencyCode
+    }
+
     var value: Float {
-        if let baseValue = baseValue, let baseCode = baseCode, let rate = data?.rates[baseCode] {
+        if let baseValue = baseValue, let baseCode = baseCode, let rate = dataProvider.data?.rates[baseCode] {
             return baseValue / rate
         } else {
-            return 1
+            return baseValue ?? AppConfig.currencyInitBaseValue //if baseValue is nil return init value
         }
     }
     
@@ -35,17 +37,20 @@ class CurrencyItemModel {
     var uiObserver: (() -> Void)?
     var baseValueObserver: ((_ newValue: Float) -> Void)?
     
-    init(code: String) {
-        self.code = code
-        loadData()
+    init(dataProvider: CurrencyDataProvider) {
+        self.dataProvider = dataProvider
+        self.dataProvider.subscriber = { [weak self] in
+            self?.uiObserver?()
+        }
+        self.dataProvider.loadData()
     }
     
     func needToUpdateCurrencyData() {
-        loadData()
+        self.dataProvider.loadData()
     }
     
     func didSetNew(baseCode: String) {
-        self.isBase = baseCode == code ? true : false
+        self.isBase = baseCode == dataProvider.currencyCode ? true : false
         self.baseCode = baseCode
     }
     
@@ -56,24 +61,7 @@ class CurrencyItemModel {
     }
     
     func setNew(baseValue: Float) {
+        self.baseValue = baseValue
         self.baseValueObserver?(baseValue)
-    }
-    
-    private func loadData() {
-        let url = AppConfig.currencyDataBaseUrl + "/latest?base=" + code
-        task = NetworkTask<Currency>()
-        task?.execute(getUrl: url, completion: { (result) in
-            switch result {
-            case .success(let data):
-                self.data = data
-                self.uiObserver?()
-            case .fail(let error):
-                print(error)
-            }
-        })
-    }
-    
-    deinit {
-        print("deinit - CurrencyItemModel")
     }
 }

@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let vc = CurrencyListViewController.storyboardInstance
-        vc?.model = CurrencyListModel(with: AppConfig.currencyCodes)
+        
+        let currencyCodes = AppConfig.currencyCodes
+        let items = currencyCodes.map { CurrencyItemModel(dataProvider: CurrencyDataProvider(currencyCode: $0)) }
+        
+        vc?.model = CurrencyListModel(with: items)
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
         
