@@ -13,8 +13,11 @@ class CurrencyItemModel {
     private let initValue: Float
     private var baseCode: String?
     private var baseValue: Float?
-    private(set) var isBase: Bool = false
     private(set) var value: Float
+    
+    var isBase: Bool {
+        return ((baseCode ?? "") == dataProvider.currencyCode)
+    }
     
     var uiObserver: (() -> Void)?
     var baseValueObserver: ((_ newValue: Float) -> Void)?
@@ -38,9 +41,7 @@ class CurrencyItemModel {
     
     private func calculate() {
         guard let baseValue = self.baseValue else { return }
-        if isBase {
-            value = baseValue
-        } else {
+        if !isBase {
             guard let baseCode = baseCode, let rate = dataProvider.data?.rates[baseCode] else { return }
             value = baseValue / rate
         }
@@ -49,18 +50,12 @@ class CurrencyItemModel {
     }
     
     func didSetNew(baseCode: String) {
-        self.isBase = baseCode == dataProvider.currencyCode
-
-        if !self.isBase {
-            self.baseCode = baseCode
-        }
+        self.baseCode = baseCode
     }
     
     func didSetNew(baseValue: Float) {
-        if !isBase {
-            self.baseValue = baseValue
-            calculate()
-        }
+        self.baseValue = baseValue
+        calculate()
     }
     
     func setNew(baseValue: Float) {

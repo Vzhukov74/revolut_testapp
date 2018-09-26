@@ -15,7 +15,7 @@ class NetworkTask<T> where T: Codable {
     //for post request you can add extension (i confine myself only get requests)
     func execute(getUrl: String, uiIndication: ((_ isLoading: Bool) -> Void)? = nil, completion: @escaping (_ result: NetworkTaskResult<T>) -> Void) {
         guard let url = URL(string: getUrl) else {
-            //here
+            //i dont have logging, but here we can add logging code
             return
         }
         

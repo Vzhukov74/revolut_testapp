@@ -9,6 +9,6 @@
 import Foundation
 
 struct CurrencyDetailInfo {
-    let flag: String
+    let flag: String //we use emoji for flags
     let name: String
 }
