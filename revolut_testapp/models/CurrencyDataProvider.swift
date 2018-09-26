@@ -11,15 +11,20 @@ import Foundation
 class CurrencyDataProvider {
     let currencyCode: String
     private var task: NetworkTask<Currency>?
-    private(set) var data: Currency? {
+    private var _data: Currency? {
         didSet {
             self.subscriber?()
         }
     }
+    
+    var data: Currency? {
+        return _data
+    }
+    
     var subscriber: (() -> Void)?
     
     init(currencyCode code: String) {
-        currencyCode = code
+        self.currencyCode = code
     }
     
     func loadData() {
@@ -28,7 +33,7 @@ class CurrencyDataProvider {
         task?.execute(getUrl: url, completion: { (result) in
             switch result {
             case .success(let data):
-                self.data = data
+                self._data = data
             case .fail(let error):
                 print(error)
             }

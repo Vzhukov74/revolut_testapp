@@ -19,11 +19,6 @@ class CurrencyListViewController: UIViewController {
     }
     
     var model: CurrencyListModel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
 }
 
 extension CurrencyListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -46,8 +41,8 @@ extension CurrencyListViewController: UITableViewDataSource, UITableViewDelegate
         
         tableView.performBatchUpdates({
             tableView.moveRow(at: indexPath, to: startIndexPath)
+            model.swapItem(at: indexPath.row, to: startIndexPath.row)
         }, completion: { [weak self] (_) in
-            self?.model.swapItem(at: indexPath.row, at: startIndexPath.row)
             self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
         })
     }

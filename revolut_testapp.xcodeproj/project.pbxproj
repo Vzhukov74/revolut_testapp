@@ -25,6 +25,9 @@
 		04701513215925E800C57164 /* CurrencyDetailInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04701512215925E800C57164 /* CurrencyDetailInfo.swift */; };
 		04C9CF69215A0BC0008A2A23 /* CurrencyListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9CF68215A0BC0008A2A23 /* CurrencyListModelTests.swift */; };
 		04C9CF6B215A15B4008A2A23 /* CurrencyDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9CF6A215A15B4008A2A23 /* CurrencyDataProvider.swift */; };
+		04C9CF88215B9C67008A2A23 /* CurrencyDataProvider_mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9CF87215B9C67008A2A23 /* CurrencyDataProvider_mock.swift */; };
+		04C9CF8A215BAD97008A2A23 /* CurrencyItemModel_mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9CF89215BAD97008A2A23 /* CurrencyItemModel_mock.swift */; };
+		04C9CF8C215BB800008A2A23 /* CurrencyItemModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9CF8B215BB800008A2A23 /* CurrencyItemModelTests.swift */; };
 		1C9636226B5E88482F9D90D7 /* Pods_revolut_testappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3379901AECC3EEC0304D11DC /* Pods_revolut_testappTests.framework */; };
 		46D69384DEED181135B1DB6D /* Pods_revolut_testapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 692F0CC0AB11C721E1FCCAE1 /* Pods_revolut_testapp.framework */; };
 /* End PBXBuildFile section */
@@ -62,6 +65,9 @@
 		04701512215925E800C57164 /* CurrencyDetailInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyDetailInfo.swift; sourceTree = "<group>"; };
 		04C9CF68215A0BC0008A2A23 /* CurrencyListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListModelTests.swift; sourceTree = "<group>"; };
 		04C9CF6A215A15B4008A2A23 /* CurrencyDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyDataProvider.swift; sourceTree = "<group>"; };
+		04C9CF87215B9C67008A2A23 /* CurrencyDataProvider_mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyDataProvider_mock.swift; sourceTree = "<group>"; };
+		04C9CF89215BAD97008A2A23 /* CurrencyItemModel_mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyItemModel_mock.swift; sourceTree = "<group>"; };
+		04C9CF8B215BB800008A2A23 /* CurrencyItemModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyItemModelTests.swift; sourceTree = "<group>"; };
 		3379901AECC3EEC0304D11DC /* Pods_revolut_testappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_revolut_testappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4822C4E5552650B89B9F6429 /* Pods-revolut_testappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-revolut_testappTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-revolut_testappTests/Pods-revolut_testappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5471521A950C46DA7973BDA6 /* Pods-revolut_testapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-revolut_testapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-revolut_testapp/Pods-revolut_testapp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,8 +136,10 @@
 		046A94AD2152274100C325E8 /* revolut_testappTests */ = {
 			isa = PBXGroup;
 			children = (
+				04C9CF86215B9C3A008A2A23 /* mocks */,
 				046A94B02152274100C325E8 /* Info.plist */,
 				04C9CF68215A0BC0008A2A23 /* CurrencyListModelTests.swift */,
+				04C9CF8B215BB800008A2A23 /* CurrencyItemModelTests.swift */,
 			);
 			path = revolut_testappTests;
 			sourceTree = "<group>";
@@ -206,6 +214,15 @@
 				04700C642153EFB100C57164 /* Currency.swift */,
 			);
 			path = "data models";
+			sourceTree = "<group>";
+		};
+		04C9CF86215B9C3A008A2A23 /* mocks */ = {
+			isa = PBXGroup;
+			children = (
+				04C9CF87215B9C67008A2A23 /* CurrencyDataProvider_mock.swift */,
+				04C9CF89215BAD97008A2A23 /* CurrencyItemModel_mock.swift */,
+			);
+			path = mocks;
 			sourceTree = "<group>";
 		};
 		51EDEAB9EB9C4589A9031EBB /* Pods */ = {
@@ -408,7 +425,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C9CF8A215BAD97008A2A23 /* CurrencyItemModel_mock.swift in Sources */,
+				04C9CF8C215BB800008A2A23 /* CurrencyItemModelTests.swift in Sources */,
 				04C9CF69215A0BC0008A2A23 /* CurrencyListModelTests.swift in Sources */,
+				04C9CF88215B9C67008A2A23 /* CurrencyDataProvider_mock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

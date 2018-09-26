@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdv-gC-jAY">
-                        <rect key="frame" x="64" y="10" width="132" height="25.5"/>
+                        <rect key="frame" x="64" y="10.5" width="132" height="25.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25.5" id="nYg-CL-TEw"/>
                         </constraints>
@@ -29,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rA-xI-TUT">
-                        <rect key="frame" x="64" y="36" width="132" height="14"/>
+                        <rect key="frame" x="64" y="36.5" width="132" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="dMJ-Um-avl"/>
                         </constraints>
@@ -38,17 +38,17 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="njM-F7-Czb">
-                        <rect key="frame" x="204" y="12.5" width="100" height="35"/>
+                        <rect key="frame" x="204" y="13.5" width="100" height="35"/>
                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="0A9-0F-HYJ"/>
                         </constraints>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="30"/>
-                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvO-nx-eCR">
-                        <rect key="frame" x="16" y="10" width="40" height="40"/>
+                        <rect key="frame" x="16" y="10.5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="3A2-80-aCd"/>
                             <constraint firstAttribute="height" constant="40" id="lqf-W0-OlK"/>
@@ -63,6 +63,7 @@
                     <constraint firstItem="xdv-gC-jAY" firstAttribute="top" secondItem="FvO-nx-eCR" secondAttribute="top" id="8eL-SO-th2"/>
                     <constraint firstItem="xdv-gC-jAY" firstAttribute="leading" secondItem="FvO-nx-eCR" secondAttribute="trailing" constant="8" id="9y5-9A-G7u"/>
                     <constraint firstItem="6rA-xI-TUT" firstAttribute="bottom" secondItem="FvO-nx-eCR" secondAttribute="bottom" id="ADx-n3-9hg"/>
+                    <constraint firstItem="njM-F7-Czb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="AVX-sW-rpm"/>
                     <constraint firstAttribute="bottom" secondItem="FvO-nx-eCR" secondAttribute="bottom" constant="10" id="Glr-iP-0b0"/>
                     <constraint firstItem="njM-F7-Czb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Rl0-k3-94u"/>
                     <constraint firstItem="njM-F7-Czb" firstAttribute="leading" secondItem="xdv-gC-jAY" secondAttribute="trailing" constant="8" id="TUC-qj-EPK"/>

@@ -42,7 +42,7 @@ class CurrencyListModel {
         })
     }
     
-    func swapItem(at i: Int, at j: Int) {
+    func swapItem(at i: Int, to j: Int) {
         guard i < items.count else { return }
         items.swapAt(i, j)
         let base = items.first! //we always have first element in items
