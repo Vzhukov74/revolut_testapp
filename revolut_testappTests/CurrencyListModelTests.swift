@@ -37,7 +37,7 @@ class CurrencyListModelTests: XCTestCase {
             XCTAssertEqual(item.didSetNewBaseBaseValueCount, 1, "CurrencyListModel set baseValue more that one time")
             XCTAssertEqual(item.didSetNewBaseCodeValueCount, 1, "CurrencyListModel set codeValue more that one time")
             
-            XCTAssertEqual(item.didSetNewBaseBaseValue ?? 0, 1, "CurrencyListModel didt set correct baseValue")
+            XCTAssertEqual(item.didSetNewBaseBaseValue ?? 0, 100, "CurrencyListModel didt set correct baseValue")
             XCTAssertEqual(item.didSetNewBaseCodeValue ?? "", "USD", "CurrencyListModel didt set correct codeValue")
         }
     }
@@ -69,7 +69,7 @@ class CurrencyListModelTests: XCTestCase {
         let swapIndex = 2
         let newBaseValue = items[swapIndex].value
         let newBaseCode = items[swapIndex].currencyCode
-        model.swapItem(at: 0, to: swapIndex)
+        model.swapItem(at: swapIndex, to: 0)
         items.forEach { (item) in
             XCTAssertEqual(item.didSetNewBaseBaseValueCount, 1, "CurrencyListModel didt set baseValue")
             XCTAssertEqual(item.didSetNewBaseCodeValueCount, 1, "CurrencyListModel didt set codeValue")

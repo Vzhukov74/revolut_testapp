@@ -77,7 +77,13 @@ class CurrencyItemModelTests: XCTestCase {
         
         XCTAssertEqual(baseValueObserverCount, 0, "CurrencyItemModel calls baseValueObserver")
         
+        //with correct value, but item is not base
         correctValueForBaseValueObserver = 10
+        item.setNew(baseValue: correctValueForBaseValueObserver)
+        XCTAssertEqual(baseValueObserverCount, 0, "CurrencyItemModel didt calls baseValueObserver")
+        
+        correctValueForBaseValueObserver = 15
+        item.didSetNew(baseCode: item.currencyCode)
         item.setNew(baseValue: correctValueForBaseValueObserver)
         XCTAssertEqual(baseValueObserverCount, 1, "CurrencyItemModel didt calls baseValueObserver")
     }

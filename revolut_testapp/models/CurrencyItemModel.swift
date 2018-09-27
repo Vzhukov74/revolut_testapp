@@ -59,6 +59,7 @@ class CurrencyItemModel {
     }
     
     func setNew(baseValue: Float) {
+        guard isBase else { return }
         self.baseValueObserver?(baseValue)
     }
 }

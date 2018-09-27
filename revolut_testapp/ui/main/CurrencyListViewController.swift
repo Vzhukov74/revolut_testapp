@@ -37,13 +37,22 @@ extension CurrencyListViewController: UITableViewDataSource, UITableViewDelegate
         tableView.deselectRow(at: indexPath, animated: true)
         guard indexPath.row > 0 else { return }
         
-        let startIndexPath = IndexPath(row: 0, section: 0)
+        let firstElementIndexPath = IndexPath(row: 0, section: 0)
+        let secondElementIndexPath = IndexPath(row: 0, section: 0)
         
+        model.swapItem(at: indexPath.row, to: firstElementIndexPath.row)
         tableView.performBatchUpdates({
-            tableView.moveRow(at: indexPath, to: startIndexPath)
+            tableView.moveRow(at: indexPath, to: firstElementIndexPath)
         }, completion: { [weak self] (_) in
-            self?.model.swapItem(at: indexPath.row, to: startIndexPath.row)
-            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
+            UIView.animate(withDuration: 0.3, animations: {
+                self?.tableView.scrollToRow(at: firstElementIndexPath, at: UITableView.ScrollPosition.top, animated: true)
+            }, completion: { (_) in
+                let firstCell = tableView.cellForRow(at: firstElementIndexPath) as? CurrencyCell
+                let secondCell = tableView.cellForRow(at: secondElementIndexPath) as? CurrencyCell
+                
+                secondCell?.endEditing()
+                firstCell?.setFirstResponder()
+            })
         })
     }
 }

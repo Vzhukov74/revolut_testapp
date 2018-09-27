@@ -21,7 +21,7 @@ class AppConfig {
     
     static let currencyUpdateTimeInterval: Double = 1 //in seconds
     
-    static let currencyInitBaseValue: Float = 1
+    static let currencyInitBaseValue: Float = 100
     
     static let currencyCodeToDetailInfoMapping = ["EUR": CurrencyDetailInfo(flag: "🇪🇺", name: "Euro"),
                                                   "USD": CurrencyDetailInfo(flag: "🇺🇸", name: "United States dollar"),

@@ -44,13 +44,15 @@ class CurrencyListModel {
     
     func swapItem(at i: Int, to j: Int) {
         guard i < items.count else { return }
-        items.swapAt(i, j)
+        let swapItem = items.remove(at: i)
+        items.insert(swapItem, at: j)
         let base = items.first! //we always have first element in items
         set(newBase: base)
     }
     
     private func set(newBase: CurrencyItemModel) {
         let value = newBase.value
+        print(value)
         currentBase = newBase.currencyCode
         currentValue = value
     }

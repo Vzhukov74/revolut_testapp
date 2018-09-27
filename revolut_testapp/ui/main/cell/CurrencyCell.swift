@@ -28,6 +28,14 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
         }
     }
     
+    func setFirstResponder() {
+        valueInput.becomeFirstResponder()
+    }
+    
+    func endEditing() {
+        valueInput.resignFirstResponder()
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         item?.uiObserver = nil
@@ -37,6 +45,7 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
         iconLabel.text = ""
         transcriptLabel.text = ""
         valueInput.text = ""
+        endEditing()
     }
     
     private func setup() {
@@ -51,7 +60,6 @@ class CurrencyCell: UITableViewCell, CellRegistable, CellDequeueReusable {
     private func update() {
         if let item = self.item, !item.isBase {
             setValueLabel(with: item.value)
-            valueInput.resignFirstResponder()
         }
     }
     
@@ -74,11 +82,22 @@ extension CurrencyCell: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.isNumberOrDot() {
             guard var text = textField.text, let range = Range(range, in: text) else { return true }
-            text.replaceSubrange(range, with: string)
+            
+            if text == "0" {
+                text = string
+            } else {
+               text.replaceSubrange(range, with: string)
+            }
+            
+            if text.isEmpty {
+                text = "0"
+            }
+            
             if let value = Float(text) {
                 item?.setNew(baseValue: value)
             }
-            return true
+            textField.text = text
+            return false
         } else {
             return false
         }
